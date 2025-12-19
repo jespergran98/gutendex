@@ -2,29 +2,23 @@
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  padding: var(--space-sm) var(--space-md);
-  background-color: var(--color-surface);
-  color: var(--color-text-primary);
-  border: 1px solid var(--color-border-light);
+  padding: var(--space-sm);
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.9);
+  border: none;
   border-radius: var(--radius-md);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   transition: all var(--transition-base);
-  box-shadow: var(--shadow-sm);
 }
 
 .filter-button:hover {
-  background-color: var(--color-primary);
-  color: var(--color-surface);
-  border-color: var(--color-primary);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
+  color: rgba(255, 255, 255, 1);
+  transform: scale(1.05);
 }
 
 .filter-button:active {
-  transform: translateY(0);
-  box-shadow: var(--shadow-sm);
-  background-color: var(--color-hover);
+  transform: scale(0.95);
 }
 
 .filter-button svg {
@@ -34,9 +28,5 @@
 @media (max-width: 640px) {
   .filter-button span {
     display: none;
-  }
-  
-  .filter-button {
-    padding: var(--space-sm);
   }
 }
