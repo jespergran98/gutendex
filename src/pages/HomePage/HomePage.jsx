@@ -3,6 +3,7 @@ import FilterButton from '../../components/FilterButton/FilterButton';
 import SortButton from '../../components/SortButton/SortButton';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import CategoryFilter from '../../components/CategoryFilter/CategoryFilter';
+import TabBar from '../../components/TabBar/TabBar';
 import './HomePage.css';
 
 function HomePage() {
@@ -30,6 +31,8 @@ function HomePage() {
           {/* Content will be added here later */}
         </main>
       </div>
+      
+      <TabBar />
     </div>
   );
 }

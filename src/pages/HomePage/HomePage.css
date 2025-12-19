@@ -39,6 +39,7 @@
   max-width: var(--container-max-width);
   margin: 0 auto;
   padding: var(--space-xl);
+  padding-bottom: calc(var(--space-xl) + 80px); /* Add space for fixed TabBar */
 }
 
 .home-header {
@@ -72,6 +73,7 @@
 @media (max-width: 768px) {
   .home-container {
     padding: var(--space-md);
+    padding-bottom: calc(var(--space-md) + 75px); /* Adjust for TabBar on tablets */
   }
   
   .home-header {
@@ -87,6 +89,7 @@
 @media (max-width: 640px) {
   .home-container {
     padding: var(--space-sm);
+    padding-bottom: calc(var(--space-sm) + 70px); /* Adjust for TabBar on mobile */
   }
   
   .background-blur::after {
