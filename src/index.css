@@ -26,12 +26,26 @@
   --color-border: #283618;
   --color-border-light: rgba(96, 108, 56, 0.2);
   
-  /* State Colors */
-  --color-hover: #4F5A2E;
-  --color-active: #283618;
-  --color-focus: #606C38;
-  --color-error: #C44536;
-  --color-success: #606C38;
+/* State Colors */
+--color-hover:   #9CCC65;  /* light olive green */
+--color-active:  #8BC34A;  /* engaged green */
+
+--color-focus:   #7A8F3A;  /* lighter sage-olive for focus rings */
+--color-error:   #B23A2B;  /* muted brick red (terracotta-adjacent) */
+--color-success: #4F6F2F;  /* deep olive green for confirmed success */
+
+
+.category-item.active {
+  background-color: #8BC34A;
+  color: var(--color-dark);
+  border: none;
+  box-shadow: var(--shadow-md);
+}
+
+.category-item.active:hover {
+  background-color: #9CCC65;
+  border: none;
+}
   
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(6, 19, 19, 0.05);

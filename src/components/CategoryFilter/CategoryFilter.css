@@ -39,14 +39,14 @@
 }
 
 .category-item.active {
-  background-color: #8BC34A;
+  background-color: var(--color-active);
   color: var(--color-dark);
   border: none;
   box-shadow: var(--shadow-md);
 }
 
 .category-item.active:hover {
-  background-color: #9CCC65;
+  background-color: var(--color-hover);
   border: none;
 }
 
