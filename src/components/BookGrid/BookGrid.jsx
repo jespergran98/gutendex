@@ -9,6 +9,13 @@ function BookGrid({ selectedCategory }) {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
+  // Reset and clear books when category changes
+  useEffect(() => {
+    setBooks([]);
+    setPage(1);
+    setError(null);
+  }, [selectedCategory]);
+
   useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -40,11 +47,6 @@ function BookGrid({ selectedCategory }) {
 
     fetchBooks();
   }, [selectedCategory, page]);
-
-  // Reset page when category changes
-  useEffect(() => {
-    setPage(1);
-  }, [selectedCategory]);
 
   const handleRetry = () => {
     setBooks([]);
