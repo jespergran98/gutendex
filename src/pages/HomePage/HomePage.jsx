@@ -3,6 +3,7 @@ import FilterButton from '../../components/FilterButton/FilterButton';
 import SortButton from '../../components/SortButton/SortButton';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import CategoryFilter from '../../components/CategoryFilter/CategoryFilter';
+import BookGrid from '../../components/BookGrid/BookGrid';
 import TabBar from '../../components/TabBar/TabBar';
 import './HomePage.css';
 
@@ -28,7 +29,7 @@ function HomePage() {
         </section>
         
         <main className="content-area">
-          {/* Content will be added here later */}
+          <BookGrid />
         </main>
       </div>
       
