@@ -16,12 +16,57 @@
   transform: translateY(-4px);
 }
 
+.book-cover-container {
+  position: relative;
+  width: 100%;
+}
+
 .book-cover {
   width: 100%;
   aspect-ratio: 2 / 3;
   object-fit: cover;
   border-radius: var(--radius-lg);
   background-color: var(--color-background);
+}
+
+.bookmark-button {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  background-color: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-fast);
+  opacity: 0;
+}
+
+.book-card:hover .bookmark-button {
+  opacity: 1;
+}
+
+.bookmark-button:hover {
+  background-color: var(--color-surface);
+  color: var(--color-secondary);
+  transform: scale(1.1);
+}
+
+.bookmark-button.bookmarked {
+  opacity: 1;
+  background-color: var(--color-secondary);
+  color: var(--color-surface);
+}
+
+.bookmark-button.bookmarked:hover {
+  background-color: var(--color-secondary);
+  color: var(--color-surface);
+  filter: brightness(1.1);
 }
 
 .book-info {
@@ -73,6 +118,10 @@
   .book-card {
     padding: var(--space-sm);
     gap: var(--space-sm);
+  }
+  
+  .bookmark-button {
+    opacity: 1;
   }
   
   .book-title {

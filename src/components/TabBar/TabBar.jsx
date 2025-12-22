@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './TabBar.css';
 
-function TabBar() {
-  const [activeTab, setActiveTab] = useState('explore');
-
+function TabBar({ activeTab, setActiveTab }) {
   return (
     <nav className="tab-bar" role="navigation" aria-label="Main navigation">
       <button
