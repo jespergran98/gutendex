@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import FilterButton from '../../components/FilterButton/FilterButton';
 import SortButton from '../../components/SortButton/SortButton';
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -8,6 +8,8 @@ import TabBar from '../../components/TabBar/TabBar';
 import './HomePage.css';
 
 function HomePage() {
+  const [selectedCategory, setSelectedCategory] = useState('All');
+
   return (
     <div className="home-page">
       <div className="background-blur"></div>
@@ -25,11 +27,14 @@ function HomePage() {
         </header>
         
         <section className="category-section">
-          <CategoryFilter />
+          <CategoryFilter 
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+          />
         </section>
         
         <main className="content-area">
-          <BookGrid />
+          <BookGrid selectedCategory={selectedCategory} />
         </main>
       </div>
       

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './CategoryFilter.css';
 
 const categories = [
@@ -18,9 +18,7 @@ const categories = [
   'Philosophy'
 ];
 
-function CategoryFilter() {
-  const [selectedCategory, setSelectedCategory] = useState('All');
-
+function CategoryFilter({ selectedCategory, setSelectedCategory }) {
   return (
     <div className="category-filter">
       <div className="category-list">
