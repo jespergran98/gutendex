@@ -32,6 +32,18 @@
   z-index: 1;
 }
 
+.home-page::after {
+  content: '';
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(to bottom, transparent 0%, rgba(6, 19, 19, 0.4) 30%, rgba(6, 19, 19, 0.8) 70%);
+  pointer-events: none;
+  z-index: 50;
+}
+
 .home-container {
   position: relative;
   z-index: 0;
@@ -84,6 +96,10 @@
   .category-section {
     margin-bottom: var(--space-xl);
   }
+  
+  .home-page::after {
+    height: 180px;
+  }
 }
 
 @media (max-width: 640px) {
@@ -94,5 +110,9 @@
   
   .background-blur::after {
     height: 40%;
+  }
+  
+  .home-page::after {
+    height: 160px;
   }
 }

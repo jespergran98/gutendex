@@ -4,41 +4,43 @@ import './TabBar.css';
 function TabBar({ activeTab, setActiveTab }) {
   return (
     <nav className="tab-bar" role="navigation" aria-label="Main navigation">
-      <button
-        className={`tab-item ${activeTab === 'explore' ? 'active' : ''}`}
-        onClick={() => setActiveTab('explore')}
-        aria-label="Explore books"
-        aria-current={activeTab === 'explore' ? 'page' : undefined}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="32"
-          height="32"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          className="tab-icon"
+      <div className="tab-bar-container">
+        <button
+          className={`tab-item ${activeTab === 'explore' ? 'active' : ''}`}
+          onClick={() => setActiveTab('explore')}
+          aria-label="Explore books"
+          aria-current={activeTab === 'explore' ? 'page' : undefined}
         >
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
-        </svg>
-      </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="tab-icon"
+          >
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+          </svg>
+        </button>
 
-      <button
-        className={`tab-item ${activeTab === 'bookmarked' ? 'active' : ''}`}
-        onClick={() => setActiveTab('bookmarked')}
-        aria-label="Bookmarked books"
-        aria-current={activeTab === 'bookmarked' ? 'page' : undefined}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="32"
-          height="32"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          className="tab-icon"
+        <button
+          className={`tab-item ${activeTab === 'bookmarked' ? 'active' : ''}`}
+          onClick={() => setActiveTab('bookmarked')}
+          aria-label="Bookmarked books"
+          aria-current={activeTab === 'bookmarked' ? 'page' : undefined}
         >
-          <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z" />
-        </svg>
-      </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="tab-icon"
+          >
+            <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z" />
+          </svg>
+        </button>
+      </div>
     </nav>
   );
 }
