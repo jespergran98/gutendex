@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useFilters } from '../../context/FilterContext';
+import { useSort } from '../../context/SortContext';
 import BookCard from '../BookCard/BookCard';
 import './BookGrid.css';
 
 function BookGrid({ selectedCategory }) {
   const { filters } = useFilters();
+  const { sortOption, sortOrder, getCurrentSortOption } = useSort();
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -15,7 +17,7 @@ function BookGrid({ selectedCategory }) {
     setBooks([]);
     setPage(1);
     setError(null);
-  }, [selectedCategory, filters]);
+  }, [selectedCategory, filters, sortOption, sortOrder]);
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -25,12 +27,25 @@ function BookGrid({ selectedCategory }) {
         
         let apiUrl = `https://gutendex.com/books/?page=${page}`;
         
-        if (selectedCategory === 'All') {
-          apiUrl += '&sort=popular';
-        } else {
+        // Apply category filter
+        if (selectedCategory !== 'All') {
           apiUrl += `&topic=${selectedCategory.toLowerCase()}`;
         }
         
+        // Apply sorting
+        const currentSort = getCurrentSortOption();
+        if (currentSort.apiParam !== 'popular') {
+          apiUrl += `&sort=${currentSort.apiParam}`;
+        } else {
+          apiUrl += `&sort=popular`;
+        }
+        
+        // Apply sort order (ascending/descending)
+        if (sortOrder === 'asc') {
+          apiUrl += '&sort_direction=ascending';
+        }
+        
+        // Apply filters
         if (filters.birthYearStart) {
           apiUrl += `&author_year_start=${filters.birthYearStart}`;
         }
@@ -56,7 +71,7 @@ function BookGrid({ selectedCategory }) {
     };
 
     fetchBooks();
-  }, [selectedCategory, page, filters]);
+  }, [selectedCategory, page, filters, sortOption, sortOrder, getCurrentSortOption]);
 
   const handleRetry = () => {
     setBooks([]);

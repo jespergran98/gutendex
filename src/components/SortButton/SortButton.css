@@ -1,19 +1,21 @@
 .sort-button {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
-  padding: var(--space-sm);
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
   background-color: transparent;
   color: rgba(255, 255, 255, 0.9);
   border: none;
   border-radius: var(--radius-md);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
   transition: all var(--transition-base);
+  cursor: pointer;
 }
 
 .sort-button:hover {
   color: rgba(255, 255, 255, 1);
+  background-color: rgba(255, 255, 255, 0.1);
   transform: scale(1.05);
 }
 
@@ -21,12 +23,28 @@
   transform: scale(0.95);
 }
 
-.sort-icon {
-  flex-shrink: 0;
+.sort-label {
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+}
+
+.sort-arrow {
+  font-size: var(--font-size-lg);
+  line-height: 1;
+  transition: transform var(--transition-fast);
 }
 
 @media (max-width: 640px) {
-  .sort-button span {
-    display: none;
+  .sort-button {
+    padding: var(--space-sm);
+    gap: 2px;
+  }
+  
+  .sort-label {
+    font-size: var(--font-size-sm);
+  }
+  
+  .sort-arrow {
+    font-size: var(--font-size-base);
   }
 }

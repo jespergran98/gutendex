@@ -1,0 +1,214 @@
+.sort-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(6, 19, 19, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--space-lg);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.sort-modal {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.25s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.sort-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-xl);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.sort-modal-header h2 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-dark);
+  margin: 0;
+}
+
+.sort-close-button {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  padding: var(--space-sm);
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sort-close-button:hover {
+  background-color: var(--color-background);
+  color: var(--color-dark);
+}
+
+.sort-close-button:active {
+  transform: scale(0.95);
+}
+
+.sort-modal-content {
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.sort-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-lg);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  min-height: 60px;
+}
+
+.sort-option:hover {
+  border-color: var(--color-primary);
+  background-color: var(--color-background);
+  transform: translateX(4px);
+  box-shadow: var(--shadow-sm);
+}
+
+.sort-option:active {
+  transform: translateX(2px);
+}
+
+.sort-option.selected {
+  background-color: var(--color-trim);
+  border-color: var(--color-trim);
+  color: var(--color-surface);
+  font-weight: var(--font-weight-semibold);
+  box-shadow: var(--shadow-md);
+}
+
+.sort-option.selected:hover {
+  background-color: var(--color-dark);
+  border-color: var(--color-dark);
+  transform: translateX(4px);
+}
+
+.sort-option-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.sort-option-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  background-color: rgba(96, 108, 56, 0.1);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  transition: all var(--transition-fast);
+}
+
+.sort-option.selected .sort-option-icon {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: var(--color-surface);
+}
+
+.sort-option-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-2xl);
+  color: var(--color-surface);
+  font-weight: var(--font-weight-bold);
+  min-width: 32px;
+  transition: transform var(--transition-fast);
+}
+
+.sort-option-arrow.desc {
+  transform: rotate(0deg);
+}
+
+.sort-option-arrow.asc {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 768px) {
+  .sort-modal-overlay {
+    padding: var(--space-md);
+  }
+
+  .sort-modal-header,
+  .sort-modal-content {
+    padding: var(--space-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .sort-modal-overlay {
+    padding: var(--space-sm);
+  }
+
+  .sort-modal {
+    border-radius: var(--radius-lg);
+  }
+
+  .sort-modal-header,
+  .sort-modal-content {
+    padding: var(--space-md);
+  }
+
+  .sort-modal-header h2 {
+    font-size: var(--font-size-xl);
+  }
+
+  .sort-option {
+    padding: var(--space-md);
+    min-height: 54px;
+  }
+
+  .sort-option-icon {
+    min-width: 32px;
+    height: 32px;
+    font-size: var(--font-size-sm);
+  }
+  
+  .sort-option-arrow {
+    font-size: var(--font-size-xl);
+  }
+}

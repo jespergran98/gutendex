@@ -7,12 +7,14 @@ import BookGrid from '../../components/BookGrid/BookGrid';
 import BookmarkedPage from '../BookmarkedPage/BookmarkedPage';
 import TabBar from '../../components/TabBar/TabBar';
 import FilterModal from '../../components/FilterModal/FilterModal';
+import SortModal from '../../components/SortModal/SortModal';
 import './HomePage.css';
 
 function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [activeTab, setActiveTab] = useState('explore');
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [isSortModalOpen, setIsSortModalOpen] = useState(false);
 
   return (
     <div className="home-page">
@@ -24,7 +26,7 @@ function HomePage() {
             <header className="home-header">
               <div className="header-actions">
                 <FilterButton onClick={() => setIsFilterModalOpen(true)} />
-                <SortButton />
+                <SortButton onClick={() => setIsSortModalOpen(true)} />
               </div>
               
               <div className="header-search">
@@ -54,6 +56,10 @@ function HomePage() {
       <FilterModal 
         isOpen={isFilterModalOpen} 
         onClose={() => setIsFilterModalOpen(false)} 
+      />
+      <SortModal 
+        isOpen={isSortModalOpen} 
+        onClose={() => setIsSortModalOpen(false)} 
       />
     </div>
   );
