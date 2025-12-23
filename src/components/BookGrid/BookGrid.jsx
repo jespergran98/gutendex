@@ -1,27 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useFilters } from '../../context/FilterContext';
 import { useSort } from '../../context/SortContext';
+import { useSearch } from '../../context/SearchContext';
 import BookCard from '../BookCard/BookCard';
 import './BookGrid.css';
 
 function BookGrid({ selectedCategory }) {
   const { filters } = useFilters();
   const { sortOption, sortOrder, getCurrentSortOption } = useSort();
+  const { searchTerm } = useSearch();
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
-  // Reset when filters or sorting changes
+  // Reset when filters, sorting, or search changes
   useEffect(() => {
     setBooks([]);
     setPage(1);
     setError(null);
-  }, [selectedCategory, filters, sortOption, sortOrder]);
+  }, [selectedCategory, filters, sortOption, sortOrder, searchTerm]);
 
-  // Client-side sorting function
-  const sortBooks = (booksToSort) => {
+  // Client-side sorting function wrapped in useCallback
+  const sortBooks = useCallback((booksToSort) => {
     const currentSort = getCurrentSortOption();
     
     // Don't sort if using API sorting
@@ -67,7 +69,7 @@ function BookGrid({ selectedCategory }) {
     }
     
     return sorted;
-  };
+  }, [sortOrder, getCurrentSortOption]);
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -77,8 +79,13 @@ function BookGrid({ selectedCategory }) {
         
         let apiUrl = `https://gutendex.com/books/?page=${page}`;
         
-        // Apply category filter
-        if (selectedCategory !== 'All') {
+        // Apply search term
+        if (searchTerm && searchTerm.trim()) {
+          apiUrl += `&search=${encodeURIComponent(searchTerm.trim())}`;
+        }
+        
+        // Apply category filter (only if no search term, as search is more specific)
+        if (selectedCategory !== 'All' && !searchTerm) {
           apiUrl += `&topic=${encodeURIComponent(selectedCategory.toLowerCase())}`;
         }
         
@@ -152,7 +159,7 @@ function BookGrid({ selectedCategory }) {
     };
 
     fetchBooks();
-  }, [selectedCategory, page, filters, sortOption, sortOrder, getCurrentSortOption]);
+  }, [selectedCategory, page, filters, sortOption, sortOrder, searchTerm, getCurrentSortOption, sortBooks]);
 
   const handleRetry = () => {
     setBooks([]);

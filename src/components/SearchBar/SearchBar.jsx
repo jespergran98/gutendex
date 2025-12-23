@@ -1,8 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearch } from '../../context/SearchContext';
 import './SearchBar.css';
 
 function SearchBar() {
-  const [searchTerm, setSearchTerm] = useState('');
+  const { searchTerm, updateSearch, clearSearch } = useSearch();
+  const [localValue, setLocalValue] = useState(searchTerm);
+
+  // Sync local value with context when context changes externally
+  useEffect(() => {
+    setLocalValue(searchTerm);
+  }, [searchTerm]);
+
+  // Debounce search to avoid too many API calls
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      updateSearch(localValue);
+    }, 500); // Wait 500ms after user stops typing
+
+    return () => clearTimeout(timer);
+  }, [localValue, updateSearch]);
+
+  const handleClear = () => {
+    setLocalValue('');
+    clearSearch();
+  };
 
   return (
     <div className="search-bar">
@@ -25,14 +46,14 @@ function SearchBar() {
         type="text"
         className="search-input"
         placeholder="Search for books, authors, or topics..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        value={localValue}
+        onChange={(e) => setLocalValue(e.target.value)}
         aria-label="Search books"
       />
-      {searchTerm && (
+      {localValue && (
         <button
           className="search-clear"
-          onClick={() => setSearchTerm('')}
+          onClick={handleClear}
           aria-label="Clear search"
         >
           <svg

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearch } from '../../context/SearchContext';
 import FilterButton from '../../components/FilterButton/FilterButton';
 import SortButton from '../../components/SortButton/SortButton';
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -11,10 +12,18 @@ import SortModal from '../../components/SortModal/SortModal';
 import './HomePage.css';
 
 function HomePage() {
+  const { clearSearch } = useSearch();
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [activeTab, setActiveTab] = useState('explore');
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [isSortModalOpen, setIsSortModalOpen] = useState(false);
+
+  // Clear search when switching to bookmarked tab
+  useEffect(() => {
+    if (activeTab === 'bookmarked') {
+      clearSearch();
+    }
+  }, [activeTab, clearSearch]);
 
   return (
     <div className="home-page">
