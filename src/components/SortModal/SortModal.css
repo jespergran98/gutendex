@@ -144,9 +144,17 @@
   transition: all var(--transition-fast);
 }
 
+.sort-option-icon svg {
+  display: block;
+}
+
 .sort-option.selected .sort-option-icon {
   background-color: rgba(255, 255, 255, 0.2);
   color: var(--color-surface);
+}
+
+.sort-option.selected .sort-option-icon svg {
+  stroke: var(--color-surface);
 }
 
 .sort-option-arrow {
@@ -198,6 +206,11 @@
     min-width: 32px;
     height: 32px;
     font-size: var(--font-size-sm);
+  }
+  
+  .sort-option-icon svg {
+    width: 16px;
+    height: 16px;
   }
   
   .sort-option-arrow {

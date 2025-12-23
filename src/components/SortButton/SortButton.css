@@ -24,8 +24,15 @@
 }
 
 .sort-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: var(--font-weight-semibold);
   white-space: nowrap;
+}
+
+.sort-label svg {
+  display: block;
 }
 
 .sort-arrow {
@@ -42,6 +49,11 @@
   
   .sort-label {
     font-size: var(--font-size-sm);
+  }
+  
+  .sort-label svg {
+    width: 16px;
+    height: 16px;
   }
   
   .sort-arrow {
