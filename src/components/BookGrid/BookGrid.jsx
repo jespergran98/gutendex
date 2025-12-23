@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { useFilters } from '../../context/FilterContext';
 import BookCard from '../BookCard/BookCard';
 import './BookGrid.css';
 
 function BookGrid({ selectedCategory }) {
+  const { filters } = useFilters();
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
-  // Reset and clear books when category changes
   useEffect(() => {
     setBooks([]);
     setPage(1);
     setError(null);
-  }, [selectedCategory]);
+  }, [selectedCategory, filters]);
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -30,12 +31,21 @@ function BookGrid({ selectedCategory }) {
           apiUrl += `&topic=${selectedCategory.toLowerCase()}`;
         }
         
-        const response = await fetch(apiUrl);
+        if (filters.birthYearStart) {
+          apiUrl += `&author_year_start=${filters.birthYearStart}`;
+        }
+        if (filters.birthYearEnd) {
+          apiUrl += `&author_year_end=${filters.birthYearEnd}`;
+        }
         
+        if (filters.languages.length > 0) {
+          apiUrl += `&languages=${filters.languages.join(',')}`;
+        }
+        
+        const response = await fetch(apiUrl);
         if (!response.ok) throw new Error('Failed to fetch books');
         
         const data = await response.json();
-        
         setBooks(prev => page === 1 ? data.results : [...prev, ...data.results]);
         setHasMore(data.next !== null);
       } catch (err) {
@@ -46,7 +56,7 @@ function BookGrid({ selectedCategory }) {
     };
 
     fetchBooks();
-  }, [selectedCategory, page]);
+  }, [selectedCategory, page, filters]);
 
   const handleRetry = () => {
     setBooks([]);
@@ -111,7 +121,7 @@ function BookGrid({ selectedCategory }) {
             <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
             <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
           </svg>
-          <p>No books found for this category</p>
+          <p>No books found with current filters</p>
         </div>
       </div>
     );

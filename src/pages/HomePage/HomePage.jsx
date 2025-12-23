@@ -6,11 +6,13 @@ import CategoryFilter from '../../components/CategoryFilter/CategoryFilter';
 import BookGrid from '../../components/BookGrid/BookGrid';
 import BookmarkedPage from '../BookmarkedPage/BookmarkedPage';
 import TabBar from '../../components/TabBar/TabBar';
+import FilterModal from '../../components/FilterModal/FilterModal';
 import './HomePage.css';
 
 function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [activeTab, setActiveTab] = useState('explore');
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
 
   return (
     <div className="home-page">
@@ -21,7 +23,7 @@ function HomePage() {
           <>
             <header className="home-header">
               <div className="header-actions">
-                <FilterButton />
+                <FilterButton onClick={() => setIsFilterModalOpen(true)} />
                 <SortButton />
               </div>
               
@@ -49,6 +51,10 @@ function HomePage() {
       </div>
       
       <TabBar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <FilterModal 
+        isOpen={isFilterModalOpen} 
+        onClose={() => setIsFilterModalOpen(false)} 
+      />
     </div>
   );
 }

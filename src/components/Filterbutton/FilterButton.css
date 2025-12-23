@@ -2,18 +2,21 @@
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  padding: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
   background-color: transparent;
   color: rgba(255, 255, 255, 0.9);
   border: none;
   border-radius: var(--radius-md);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
   transition: all var(--transition-base);
+  position: relative;
+  cursor: pointer;
 }
 
 .filter-button:hover {
   color: rgba(255, 255, 255, 1);
+  background-color: rgba(255, 255, 255, 0.1);
   transform: scale(1.05);
 }
 
@@ -21,12 +24,45 @@
   transform: scale(0.95);
 }
 
+.filter-button.active {
+  color: var(--color-active);
+}
+
+.filter-button.active:hover {
+  color: var(--color-hover);
+}
+
 .filter-button svg {
   flex-shrink: 0;
 }
 
+.filter-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-active);
+  border-radius: 50%;
+  border: 2px solid rgba(6, 19, 19, 0.8);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
 @media (max-width: 640px) {
-  .filter-button span {
+  .filter-button {
+    padding: var(--space-sm);
+  }
+  
+  .filter-button span:not(.filter-badge) {
     display: none;
   }
 }

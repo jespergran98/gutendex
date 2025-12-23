@@ -1,9 +1,17 @@
 import React from 'react';
+import { useFilters } from '../../context/FilterContext';
 import './FilterButton.css';
 
-function FilterButton() {
+function FilterButton({ onClick }) {
+  const { hasActiveFilters } = useFilters();
+  const isActive = hasActiveFilters();
+
   return (
-    <button className="filter-button" aria-label="Filter books">
+    <button 
+      className={`filter-button ${isActive ? 'active' : ''}`}
+      onClick={onClick}
+      aria-label={isActive ? 'Filter books (active)' : 'Filter books'}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -26,6 +34,7 @@ function FilterButton() {
         <line x1="17" y1="16" x2="23" y2="16" />
       </svg>
       <span>Filter</span>
+      {isActive && <span className="filter-badge"></span>}
     </button>
   );
 }
