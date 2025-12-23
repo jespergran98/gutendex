@@ -3,109 +3,107 @@ import { useFilters } from '../../context/FilterContext';
 import './FilterModal.css';
 
 const LANGUAGES = [
-  { code: 'en', name: 'English', flag: '🇬🇧' },
-  { code: 'fr', name: 'French', flag: '🇫🇷' },
-  { code: 'de', name: 'German', flag: '🇩🇪' },
-  { code: 'es', name: 'Spanish', flag: '🇪🇸' },
-  { code: 'it', name: 'Italian', flag: '🇮🇹' },
-  { code: 'pt', name: 'Portuguese', flag: '🇵🇹' },
-  { code: 'nl', name: 'Dutch', flag: '🇳🇱' },
-  { code: 'ru', name: 'Russian', flag: '🇷🇺' },
-  { code: 'zh', name: 'Chinese', flag: '🇨🇳' },
-  { code: 'ja', name: 'Japanese', flag: '🇯🇵' },
-  { code: 'fi', name: 'Finnish', flag: '🇫🇮' },
-  { code: 'sv', name: 'Swedish', flag: '🇸🇪' },
-  { code: 'da', name: 'Danish', flag: '🇩🇰' },
-  { code: 'no', name: 'Norwegian', flag: '🇳🇴' },
-  { code: 'pl', name: 'Polish', flag: '🇵🇱' },
-  { code: 'cs', name: 'Czech', flag: '🇨🇿' },
-  { code: 'hu', name: 'Hungarian', flag: '🇭🇺' },
-  { code: 'el', name: 'Greek', flag: '🇬🇷' },
-  { code: 'la', name: 'Latin', flag: '🏛️' },
-  { code: 'ar', name: 'Arabic', flag: '🇸🇦' }
+  { code: 'en', name: 'English', flag: 'gb' },
+  { code: 'fr', name: 'French', flag: 'fr' },
+  { code: 'de', name: 'German', flag: 'de' },
+  { code: 'es', name: 'Spanish', flag: 'es' },
+  { code: 'it', name: 'Italian', flag: 'it' },
+  { code: 'pt', name: 'Portuguese', flag: 'pt' },
+  { code: 'nl', name: 'Dutch', flag: 'nl' },
+  { code: 'ru', name: 'Russian', flag: 'ru' },
+  { code: 'zh', name: 'Chinese', flag: 'cn' },
+  { code: 'ja', name: 'Japanese', flag: 'jp' },
+  { code: 'fi', name: 'Finnish', flag: 'fi' },
+  { code: 'sv', name: 'Swedish', flag: 'se' },
+  { code: 'da', name: 'Danish', flag: 'dk' },
+  { code: 'no', name: 'Norwegian', flag: 'no' },
+  { code: 'pl', name: 'Polish', flag: 'pl' },
+  { code: 'cs', name: 'Czech', flag: 'cz' },
+  { code: 'hu', name: 'Hungarian', flag: 'hu' },
+  { code: 'el', name: 'Greek', flag: 'gr' },
+  { code: 'la', name: 'Latin', flag: 'va' },
+  { code: 'ar', name: 'Arabic', flag: 'sa' }
 ];
 
 function FilterModal({ isOpen, onClose }) {
   const { filters, updateFilters, clearFilters } = useFilters();
-  const [localFilters, setLocalFilters] = useState(filters);
 
-  useEffect(() => {
-    if (isOpen) {
-      setLocalFilters(filters);
-    }
-  }, [isOpen, filters]);
+  if (!isOpen) return null;
+
+  return (
+    <FilterModalContent
+      key={isOpen ? 'open' : 'closed'}
+      filters={filters}
+      updateFilters={updateFilters}
+      clearFilters={clearFilters}
+      onClose={onClose}
+    />
+  );
+}
+
+function FilterModalContent({ filters, updateFilters, clearFilters, onClose }) {
+  const [localState, setLocalState] = useState({
+    birthYearStart: filters.birthYearStart || '',
+    birthYearEnd: filters.birthYearEnd || '',
+    selectedLanguages: filters.languages || []
+  });
 
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === 'Escape') onClose();
     };
-    
-    if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'hidden';
-    }
-    
+
+    document.addEventListener('keydown', handleEscape);
+    document.body.style.overflow = 'hidden';
+
     return () => {
       document.removeEventListener('keydown', handleEscape);
       document.body.style.overflow = 'unset';
     };
-  }, [isOpen, onClose]);
+  }, [onClose]);
 
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) onClose();
   };
 
-  const handleInputChange = (field, value) => {
-    setLocalFilters(prev => ({ ...prev, [field]: value }));
-  };
-
   const toggleLanguage = (code) => {
-    setLocalFilters(prev => ({
+    setLocalState(prev => ({
       ...prev,
-      languages: prev.languages.includes(code)
-        ? prev.languages.filter(l => l !== code)
-        : [...prev.languages, code]
+      selectedLanguages: prev.selectedLanguages.includes(code)
+        ? prev.selectedLanguages.filter(l => l !== code)
+        : [...prev.selectedLanguages, code]
     }));
   };
 
   const handleApply = () => {
-    updateFilters(localFilters);
+    updateFilters({
+      birthYearStart: localState.birthYearStart,
+      birthYearEnd: localState.birthYearEnd,
+      languages: localState.selectedLanguages
+    });
     onClose();
   };
 
   const handleClear = () => {
-    const emptyFilters = {
+    setLocalState({
       birthYearStart: '',
       birthYearEnd: '',
-      languages: []
-    };
-    setLocalFilters(emptyFilters);
+      selectedLanguages: []
+    });
     clearFilters();
   };
-
-  if (!isOpen) return null;
 
   return (
     <div className="filter-modal-overlay" onClick={handleBackdropClick}>
       <div className="filter-modal">
         <div className="filter-modal-header">
-          <h2>Filter Books</h2>
+          <h2>Filters</h2>
           <button 
             className="close-button"
             onClick={onClose}
-            aria-label="Close filter modal"
+            aria-label="Close"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
@@ -114,61 +112,41 @@ function FilterModal({ isOpen, onClose }) {
 
         <div className="filter-modal-content">
           <section className="filter-section">
-            <h3 className="filter-section-title">Author Birth Year</h3>
-            
-            <div className="filter-group">
-              <div className="year-range-inputs">
-                <input
-                  type="number"
-                  placeholder="From (e.g., 1800)"
-                  value={localFilters.birthYearStart}
-                  onChange={(e) => handleInputChange('birthYearStart', e.target.value)}
-                  className="year-input"
-                  min="0"
-                  max="2100"
-                />
-                <span className="range-separator">—</span>
-                <input
-                  type="number"
-                  placeholder="To (e.g., 1900)"
-                  value={localFilters.birthYearEnd}
-                  onChange={(e) => handleInputChange('birthYearEnd', e.target.value)}
-                  className="year-input"
-                  min="0"
-                  max="2100"
-                />
-              </div>
+            <h3>Author Birth Year</h3>
+            <div className="year-inputs">
+              <input
+                type="number"
+                placeholder="From"
+                value={localState.birthYearStart}
+                onChange={(e) => setLocalState(prev => ({ ...prev, birthYearStart: e.target.value }))}
+                className="year-input"
+              />
+              <span className="separator">—</span>
+              <input
+                type="number"
+                placeholder="To"
+                value={localState.birthYearEnd}
+                onChange={(e) => setLocalState(prev => ({ ...prev, birthYearEnd: e.target.value }))}
+                className="year-input"
+              />
             </div>
           </section>
 
           <section className="filter-section">
-            <h3 className="filter-section-title">Languages</h3>
+            <h3>Languages</h3>
             <div className="language-grid">
               {LANGUAGES.map(lang => (
                 <button
                   key={lang.code}
-                  type="button"
-                  className={`language-item ${localFilters.languages.includes(lang.code) ? 'selected' : ''}`}
+                  className={`language-item ${localState.selectedLanguages.includes(lang.code) ? 'selected' : ''}`}
                   onClick={() => toggleLanguage(lang.code)}
                 >
-                  <span className="language-flag">{lang.flag}</span>
-                  <span className="language-name">{lang.name}</span>
-                  {localFilters.languages.includes(lang.code) && (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="check-icon"
-                    >
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  )}
+                  <img 
+                    src={`/flags/${lang.flag}.svg`} 
+                    alt=""
+                    className="language-flag"
+                  />
+                  <span>{lang.name}</span>
                 </button>
               ))}
             </div>
@@ -176,19 +154,11 @@ function FilterModal({ isOpen, onClose }) {
         </div>
 
         <div className="filter-modal-footer">
-          <button 
-            type="button"
-            className="clear-button" 
-            onClick={handleClear}
-          >
-            Clear All
+          <button className="clear-button" onClick={handleClear}>
+            Clear
           </button>
-          <button 
-            type="button"
-            className="apply-button" 
-            onClick={handleApply}
-          >
-            Apply Filters
+          <button className="apply-button" onClick={handleApply}>
+            Apply
           </button>
         </div>
       </div>
