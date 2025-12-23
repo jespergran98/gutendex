@@ -13,11 +13,61 @@ function BookGrid({ selectedCategory }) {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
+  // Reset when filters or sorting changes
   useEffect(() => {
     setBooks([]);
     setPage(1);
     setError(null);
   }, [selectedCategory, filters, sortOption, sortOrder]);
+
+  // Client-side sorting function
+  const sortBooks = (booksToSort) => {
+    const currentSort = getCurrentSortOption();
+    
+    // Don't sort if using API sorting
+    if (currentSort.useApi) {
+      return booksToSort;
+    }
+
+    const sorted = [...booksToSort];
+    
+    switch (currentSort.id) {
+      case 'title':
+        sorted.sort((a, b) => {
+          const titleA = a.title.toLowerCase();
+          const titleB = b.title.toLowerCase();
+          return sortOrder === 'asc' 
+            ? titleA.localeCompare(titleB)
+            : titleB.localeCompare(titleA);
+        });
+        break;
+        
+      case 'author':
+        sorted.sort((a, b) => {
+          const authorA = (a.authors?.[0]?.name || 'Unknown').toLowerCase();
+          const authorB = (b.authors?.[0]?.name || 'Unknown').toLowerCase();
+          return sortOrder === 'asc'
+            ? authorA.localeCompare(authorB)
+            : authorB.localeCompare(authorA);
+        });
+        break;
+        
+      case 'birth_year':
+        sorted.sort((a, b) => {
+          const yearA = a.authors?.[0]?.birth_year || 0;
+          const yearB = b.authors?.[0]?.birth_year || 0;
+          return sortOrder === 'asc'
+            ? yearA - yearB
+            : yearB - yearA;
+        });
+        break;
+        
+      default:
+        break;
+    }
+    
+    return sorted;
+  };
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -29,23 +79,26 @@ function BookGrid({ selectedCategory }) {
         
         // Apply category filter
         if (selectedCategory !== 'All') {
-          apiUrl += `&topic=${selectedCategory.toLowerCase()}`;
+          apiUrl += `&topic=${encodeURIComponent(selectedCategory.toLowerCase())}`;
         }
         
-        // Apply sorting
+        // Apply API sorting (only for popularity and ID)
         const currentSort = getCurrentSortOption();
-        if (currentSort.apiParam !== 'popular') {
-          apiUrl += `&sort=${currentSort.apiParam}`;
-        } else {
-          apiUrl += `&sort=popular`;
+        if (currentSort.useApi) {
+          if (currentSort.id === 'popularity') {
+            // Gutendex API: popular is always descending
+            // If user wants ascending popularity, we'll sort client-side
+            if (sortOrder === 'desc') {
+              apiUrl += `&sort=popular`;
+            }
+            // For ascending popularity, we fetch with popular and sort client-side
+          } else if (currentSort.id === 'id') {
+            // For ID sorting, use ascending or descending based on sortOrder
+            apiUrl += sortOrder === 'asc' ? `&sort=ascending` : `&sort=descending`;
+          }
         }
         
-        // Apply sort order (ascending/descending)
-        if (sortOrder === 'asc') {
-          apiUrl += '&sort_direction=ascending';
-        }
-        
-        // Apply filters
+        // Apply author year filters
         if (filters.birthYearStart) {
           apiUrl += `&author_year_start=${filters.birthYearStart}`;
         }
@@ -53,17 +106,45 @@ function BookGrid({ selectedCategory }) {
           apiUrl += `&author_year_end=${filters.birthYearEnd}`;
         }
         
+        // Apply language filters
         if (filters.languages.length > 0) {
           apiUrl += `&languages=${filters.languages.join(',')}`;
         }
         
         const response = await fetch(apiUrl);
-        if (!response.ok) throw new Error('Failed to fetch books');
+        if (!response.ok) {
+          throw new Error(`Failed to fetch books: ${response.status} ${response.statusText}`);
+        }
         
         const data = await response.json();
-        setBooks(prev => page === 1 ? data.results : [...prev, ...data.results]);
+        
+        // Sort results if needed
+        let results = data.results;
+        
+        // Handle special case: ascending popularity needs client-side sort
+        if (currentSort.id === 'popularity' && sortOrder === 'asc') {
+          results = [...results].sort((a, b) => a.download_count - b.download_count);
+        }
+        // Apply client-side sorting for non-API sorts
+        else if (!currentSort.useApi) {
+          results = sortBooks(results);
+        }
+        
+        // Update books list
+        setBooks(prev => {
+          if (page === 1) {
+            return results;
+          }
+          // For client-side sorting, we need to sort the combined array
+          if (!currentSort.useApi || (currentSort.id === 'popularity' && sortOrder === 'asc')) {
+            return sortBooks([...prev, ...results]);
+          }
+          return [...prev, ...results];
+        });
+        
         setHasMore(data.next !== null);
       } catch (err) {
+        console.error('Error fetching books:', err);
         setError(err.message);
       } finally {
         setLoading(false);
@@ -146,7 +227,7 @@ function BookGrid({ selectedCategory }) {
     <div className="book-grid-container">
       <div className="book-grid">
         {books.map(book => (
-          <BookCard key={book.id} book={book} />
+          <BookCard key={`${book.id}-${page}`} book={book} />
         ))}
       </div>
       

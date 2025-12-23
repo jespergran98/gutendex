@@ -28,15 +28,16 @@ function SortModal({ isOpen, onClose }) {
   };
 
   const handleOptionClick = (optionId) => {
+    const option = Object.values(SORT_OPTIONS).find(opt => opt.id === optionId);
+    
     if (optionId === sortOption) {
       // Toggle order if same option is clicked
       const newOrder = sortOrder === 'desc' ? 'asc' : 'desc';
       updateSort(optionId, newOrder);
     } else {
-      // Set new option but keep current order direction
-      updateSort(optionId, sortOrder);
+      // Set new option with its natural order
+      updateSort(optionId, option.naturalOrder);
     }
-    onClose();
   };
 
   return (
@@ -59,6 +60,7 @@ function SortModal({ isOpen, onClose }) {
         <div className="sort-modal-content">
           {Object.values(SORT_OPTIONS).map((option) => {
             const isSelected = option.id === sortOption;
+            const isNaturalOrder = sortOrder === option.naturalOrder;
             
             return (
               <button
@@ -71,8 +73,8 @@ function SortModal({ isOpen, onClose }) {
                   <span>{option.label}</span>
                 </div>
                 {isSelected && (
-                  <div className={`sort-option-arrow ${sortOrder}`}>
-                    {sortOrder === 'desc' ? '↓' : '↑'}
+                  <div className={`sort-option-arrow ${isNaturalOrder ? 'natural' : 'reversed'}`}>
+                    {isNaturalOrder ? '↑' : '↓'}
                   </div>
                 )}
               </button>

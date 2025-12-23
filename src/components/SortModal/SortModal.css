@@ -157,15 +157,7 @@
   color: var(--color-surface);
   font-weight: var(--font-weight-bold);
   min-width: 32px;
-  transition: transform var(--transition-fast);
-}
-
-.sort-option-arrow.desc {
-  transform: rotate(0deg);
-}
-
-.sort-option-arrow.asc {
-  transform: rotate(180deg);
+  transition: transform 0.2s ease;
 }
 
 @media (max-width: 768px) {

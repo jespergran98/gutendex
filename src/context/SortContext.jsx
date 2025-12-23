@@ -13,17 +13,51 @@ export const useSort = () => {
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const SORT_OPTIONS = {
-  POPULARITY: { id: 'popularity', label: 'Popularity', icon: '★', apiParam: 'popular' },
-  TITLE: { id: 'title', label: 'Title', icon: 'A-Z', apiParam: 'title' },
-  AUTHOR: { id: 'author', label: 'Author', icon: 'Author', apiParam: 'author' },
-  ID: { id: 'id', label: 'ID', icon: '#', apiParam: 'id' },
-  BIRTH_YEAR: { id: 'birth_year', label: 'Birth Year', icon: 'Birth', apiParam: 'birth_year' },
-  DEATH_YEAR: { id: 'death_year', label: 'Death Year', icon: 'Death', apiParam: 'death_year' }
+  POPULARITY: { 
+    id: 'popularity', 
+    label: 'Popularity', 
+    icon: '★', 
+    apiParam: 'popular',
+    naturalOrder: 'desc', // Most popular (highest downloads) first when arrow is UP
+    useApi: true
+  },
+  TITLE: { 
+    id: 'title', 
+    label: 'Title', 
+    icon: 'A-Z', 
+    apiParam: null,
+    naturalOrder: 'asc', // A to Z when arrow is UP
+    useApi: false
+  },
+  AUTHOR: { 
+    id: 'author', 
+    label: 'Author', 
+    icon: 'Author', 
+    apiParam: null,
+    naturalOrder: 'asc', // A to Z when arrow is UP
+    useApi: false
+  },
+  ID: { 
+    id: 'id', 
+    label: 'ID', 
+    icon: '#', 
+    apiParam: 'id',
+    naturalOrder: 'asc', // Lowest ID (1, 2, 3...) first when arrow is UP
+    useApi: true
+  },
+  BIRTH_YEAR: { 
+    id: 'birth_year', 
+    label: 'Birth Year', 
+    icon: 'Birth', 
+    apiParam: null,
+    naturalOrder: 'desc', // Youngest authors (most recent birth years) first when arrow is UP
+    useApi: false
+  }
 };
 
 export const SortProvider = ({ children }) => {
   const [sortOption, setSortOption] = useState(SORT_OPTIONS.POPULARITY.id);
-  const [sortOrder, setSortOrder] = useState('desc'); // 'asc' or 'desc'
+  const [sortOrder, setSortOrder] = useState(SORT_OPTIONS.POPULARITY.naturalOrder);
 
   const updateSort = (option, order) => {
     setSortOption(option);

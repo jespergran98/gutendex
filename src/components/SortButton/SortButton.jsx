@@ -5,6 +5,9 @@ import './SortButton.css';
 function SortButton({ onClick }) {
   const { getCurrentSortOption, sortOrder } = useSort();
   const currentOption = getCurrentSortOption();
+  
+  // Arrow points UP when in natural order, DOWN when reversed
+  const isNaturalOrder = sortOrder === currentOption.naturalOrder;
 
   return (
     <button 
@@ -13,7 +16,7 @@ function SortButton({ onClick }) {
       onClick={onClick}
     >
       <span className="sort-label">{currentOption.icon}</span>
-      <span className="sort-arrow">{sortOrder === 'desc' ? '↓' : '↑'}</span>
+      <span className="sort-arrow">{isNaturalOrder ? '↑' : '↓'}</span>
     </button>
   );
 }
