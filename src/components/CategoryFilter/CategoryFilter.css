@@ -6,15 +6,9 @@
 .category-list {
   display: flex;
   gap: var(--space-sm);
-  overflow-x: auto;
   padding: var(--space-xs) 0;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-
-.category-list::-webkit-scrollbar {
-  display: none;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .category-item {
@@ -48,6 +42,22 @@
 .category-item.active:hover {
   background-color: var(--color-hover);
   border: none;
+}
+
+/* Mobile: horizontal scroll */
+@media (max-width: 788px) {
+  .category-list {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .category-list::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @media (max-width: 640px) {
