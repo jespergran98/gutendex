@@ -5,7 +5,7 @@ import { useSearch } from '../../context/SearchContext';
 import BookCard from '../BookCard/BookCard';
 import './BookGrid.css';
 
-function BookGrid({ selectedCategory }) {
+function BookGrid({ selectedCategory, onBookClick }) {
   const { filters } = useFilters();
   const { sortOption, sortOrder, getCurrentSortOption } = useSort();
   const { searchTerm } = useSearch();
@@ -234,7 +234,11 @@ function BookGrid({ selectedCategory }) {
     <div className="book-grid-container">
       <div className="book-grid">
         {books.map(book => (
-          <BookCard key={`${book.id}-${page}`} book={book} />
+          <BookCard 
+            key={`${book.id}-${page}`} 
+            book={book}
+            onBookClick={onBookClick}
+          />
         ))}
       </div>
       

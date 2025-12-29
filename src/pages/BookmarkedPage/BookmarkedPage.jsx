@@ -3,7 +3,7 @@ import { useBookmarks } from '../../context/BookmarkContext';
 import BookCard from '../../components/BookCard/BookCard';
 import './BookmarkedPage.css';
 
-function BookmarkedPage() {
+function BookmarkedPage({ onBookClick }) {
   const { bookmarkedBooks } = useBookmarks();
 
   if (bookmarkedBooks.length === 0) {
@@ -38,7 +38,11 @@ function BookmarkedPage() {
       </div>
       <div className="bookmarked-grid">
         {bookmarkedBooks.map(book => (
-          <BookCard key={book.id} book={book} />
+          <BookCard 
+            key={book.id} 
+            book={book}
+            onBookClick={onBookClick}
+          />
         ))}
       </div>
     </div>

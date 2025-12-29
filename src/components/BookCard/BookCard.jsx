@@ -2,7 +2,7 @@ import React from 'react';
 import { useBookmarks } from '../../context/BookmarkContext';
 import './BookCard.css';
 
-function BookCard({ book }) {
+function BookCard({ book, onBookClick }) {
   const { toggleBookmark, isBookmarked } = useBookmarks();
   const bookmarked = isBookmarked(book.id);
   
@@ -15,8 +15,14 @@ function BookCard({ book }) {
     toggleBookmark(book);
   };
 
+  const handleCardClick = () => {
+    if (onBookClick) {
+      onBookClick(book);
+    }
+  };
+
   return (
-    <div className="book-card">
+    <div className="book-card" onClick={handleCardClick}>
       <div className="book-cover-container">
         <img 
           src={coverImage} 

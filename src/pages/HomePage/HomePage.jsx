@@ -6,6 +6,7 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import CategoryFilter from '../../components/CategoryFilter/CategoryFilter';
 import BookGrid from '../../components/BookGrid/BookGrid';
 import BookmarkedPage from '../BookmarkedPage/BookmarkedPage';
+import BookDetailsPage from '../BookDetailsPage/BookDetailsPage';
 import TabBar from '../../components/TabBar/TabBar';
 import FilterModal from '../../components/FilterModal/FilterModal';
 import SortModal from '../../components/SortModal/SortModal';
@@ -17,6 +18,7 @@ function HomePage() {
   const [activeTab, setActiveTab] = useState('explore');
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [isSortModalOpen, setIsSortModalOpen] = useState(false);
+  const [selectedBook, setSelectedBook] = useState(null);
 
   // Clear search when switching to bookmarked tab
   useEffect(() => {
@@ -24,6 +26,14 @@ function HomePage() {
       clearSearch();
     }
   }, [activeTab, clearSearch]);
+
+  const handleBookClick = (book) => {
+    setSelectedBook(book);
+  };
+
+  const handleCloseDetails = () => {
+    setSelectedBook(null);
+  };
 
   return (
     <div className="home-page">
@@ -51,12 +61,15 @@ function HomePage() {
             </section>
             
             <main className="content-area">
-              <BookGrid selectedCategory={selectedCategory} />
+              <BookGrid 
+                selectedCategory={selectedCategory}
+                onBookClick={handleBookClick}
+              />
             </main>
           </>
         ) : (
           <main className="content-area">
-            <BookmarkedPage />
+            <BookmarkedPage onBookClick={handleBookClick} />
           </main>
         )}
       </div>
@@ -70,6 +83,13 @@ function HomePage() {
         isOpen={isSortModalOpen} 
         onClose={() => setIsSortModalOpen(false)} 
       />
+      
+      {selectedBook && (
+        <BookDetailsPage 
+          book={selectedBook} 
+          onClose={handleCloseDetails}
+        />
+      )}
     </div>
   );
 }
