@@ -2,7 +2,7 @@
 
 A modern web application for browsing and discovering books from Project Gutenberg's collection.
 
-![Gutendex Library Screenshot](./assets/website.png)
+![Gutendex Library Screenshot](public/assets/website.png)
 
 ## Core Functionality
 
@@ -59,6 +59,87 @@ Quick filter by topic:
 ## Data Source
 
 All book data is provided by the [Gutendex API](https://gutendex.com), a JSON web API for Project Gutenberg's ebook metadata.
+
+## Project Structure
+
+```ini
+gutendex/
+├── node_modules/
+├── public/
+│   ├── flags/
+│   └── assets/
+│       ├── background.webp
+│       ├── favicon.png
+│       └── website.png
+│
+├── src/
+│   ├── components/
+│   │   ├── BookCard/
+│   │   │   ├── BookCard.css
+│   │   │   └── BookCard.jsx
+│   │   │
+│   │   ├── BookGrid/
+│   │   │   ├── BookGrid.css
+│   │   │   └── BookGrid.jsx
+│   │   │
+│   │   ├── CategoryFilter/
+│   │   │   ├── CategoryFilter.css
+│   │   │   └── CategoryFilter.jsx
+│   │   │
+│   │   ├── FilterButton/
+│   │   │   ├── FilterButton.css
+│   │   │   └── FilterButton.jsx
+│   │   │
+│   │   ├── FilterModal/
+│   │   │   ├── FilterModal.css
+│   │   │   └── FilterModal.jsx
+│   │   │
+│   │   ├── SearchBar/
+│   │   │   ├── SearchBar.css
+│   │   │   └── SearchBar.jsx
+│   │   │
+│   │   ├── SortButton/
+│   │   │   ├── SortButton.css
+│   │   │   └── SortButton.jsx
+│   │   │
+│   │   ├── SortModal/
+│   │   │   ├── SortModal.css
+│   │   │   └── SortModal.jsx
+│   │   │
+│   │   └── TabBar/
+│   │       ├── TabBar.css
+│   │       └── TabBar.jsx
+│   │
+│   ├── context/
+│   │   ├── BookmarkContext.jsx
+│   │   ├── FilterContext.jsx
+│   │   ├── SearchContext.jsx
+│   │   └── SortContext.jsx
+│   │
+│   ├── pages/
+│   │   ├── BookmarkedPage/
+│   │   │   ├── BookmarkedPage.css
+│   │   │   └── BookmarkedPage.jsx
+│   │   │
+│   │   └── HomePage/
+│   │       ├── HomePage.css
+│   │       └── HomePage.jsx
+│   │
+│   ├── App.css
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
+│
+├── zNotes/
+│
+├── .gitignore
+├── eslint.config.js
+├── index.html
+├── package-lock.json
+├── package.json
+├── README.md
+└── vite.config.ts
+```
 
 ---
 
