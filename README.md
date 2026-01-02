@@ -2,6 +2,8 @@
 
 A modern web application for browsing and discovering books from Project Gutenberg's collection.
 
+![Gutendex Library Screenshot](./assets/website.png)
+
 ## Core Functionality
 
 ### Browse & Explore
