@@ -1,3 +1,65 @@
+# Gutendex Library
+
+A modern web application for browsing and discovering books from Project Gutenberg's collection.
+
+## Core Functionality
+
+### Browse & Explore
+
+- View thousands of free books from the Project Gutenberg library
+- Infinite scroll with "Load More" pagination
+- Beautiful card-based grid layout with book covers
+
+### Search
+
+- Search books by title or author name
+- Real-time search results
+
+### Filter
+
+- **Author Birth Year**: Filter books by author's birth year range
+- **Language**: Filter by 20+ languages including English, French, German, Spanish, and more
+
+### Sort
+
+Sort books by:
+
+- **Popularity**: Most/least downloaded books
+- **Title**: Alphabetical order
+- **Author**: By author name
+- **Author Birth Year**: By author's birth year
+- **Book ID**: Newest/oldest additions
+
+### Categories
+
+Quick filter by topic:
+
+- Fiction, Mystery, Thriller, Romance, Fantasy
+- Philosophy, Society, Morality, Justice, Power
+- Adventure, War, Tragedy
+
+### Bookmarks
+
+- Save favorite books for later
+- Access bookmarked books from dedicated tab
+- Bookmarks persist across sessions
+
+### Book Details
+
+- Click any book to view full details
+- See author information, download counts, and available formats
+
+## Navigation
+
+- **Explore Tab**: Browse the full library with all filters and search
+- **Bookmarked Tab**: View your saved books
+
+## Data Source
+
+All book data is provided by the [Gutendex API](https://gutendex.com), a JSON web API for Project Gutenberg's ebook metadata.
+
+---
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
