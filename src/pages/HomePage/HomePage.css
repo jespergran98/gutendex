@@ -51,6 +51,7 @@
   max-width: var(--container-max-width);
   margin: 0 auto;
   padding: var(--space-xl);
+  padding-top: max(var(--space-xl), env(safe-area-inset-top, var(--space-xl)));
   padding-bottom: calc(var(--space-xl) + 80px); /* Add space for fixed TabBar */
 }
 
@@ -66,6 +67,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  gap: var(--space-md);
 }
 
 .header-search {
@@ -85,12 +87,17 @@
 @media (max-width: 768px) {
   .home-container {
     padding: var(--space-md);
+    padding-top: max(var(--space-md), env(safe-area-inset-top, var(--space-md)));
     padding-bottom: calc(var(--space-md) + 75px); /* Adjust for TabBar on tablets */
   }
   
   .home-header {
     gap: var(--space-md);
     margin-bottom: var(--space-sm);
+  }
+  
+  .header-actions {
+    gap: var(--space-sm);
   }
   
   .category-section {
@@ -105,7 +112,12 @@
 @media (max-width: 640px) {
   .home-container {
     padding: var(--space-sm);
+    padding-top: max(var(--space-sm), env(safe-area-inset-top, var(--space-sm)));
     padding-bottom: calc(var(--space-sm) + 70px); /* Adjust for TabBar on mobile */
+  }
+  
+  .header-actions {
+    gap: var(--space-xs);
   }
   
   .background-blur::after {

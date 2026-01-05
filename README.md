@@ -94,6 +94,10 @@ gutendex/
 │   │   │   ├── FilterModal.css
 │   │   │   └── FilterModal.jsx
 │   │   │
+│   │   ├── GutendexTitle/
+│   │   │   ├── GutendexTitle.css
+│   │   │   └── GutendexTitle.jsx
+│   │   │
 │   │   ├── SearchBar/
 │   │   │   ├── SearchBar.css
 │   │   │   └── SearchBar.jsx

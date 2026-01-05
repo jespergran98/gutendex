@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearch } from '../../context/SearchContext';
+import GutendexTitle from '../../components/GutendexTitle/GutendexTitle';
 import FilterButton from '../../components/FilterButton/FilterButton';
 import SortButton from '../../components/SortButton/SortButton';
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -45,6 +46,7 @@ function HomePage() {
             <header className="home-header">
               <div className="header-actions">
                 <FilterButton onClick={() => setIsFilterModalOpen(true)} />
+                <GutendexTitle />
                 <SortButton onClick={() => setIsSortModalOpen(true)} />
               </div>
               
