@@ -56,6 +56,23 @@ Quick filter by topic:
 - **Explore Tab**: Browse the full library with all filters and search
 - **Bookmarked Tab**: View your saved books
 
+## Caching System Implementation
+
+### **How It Works**
+
+1. **Cache Key Generation**: Creates a unique key from URL parameters (page, category, filters, sort options)
+2. **Cache Check**: Before fetching, checks if data exists in cache
+3. **Instant Return**: If cached, data is returned immediately (no API call)
+4. **Cache Storage**: New API responses are automatically cached
+5. **Smart Invalidation**: Cache resets when filters/sort/search change
+
+### **Benefits**
+
+- **Performance**: Instant loading for previously viewed pages
+- **Reduced API Load**: Fewer requests to Gutendex API
+- **Better UX**: No loading states when returning to cached pages
+- **Memory Efficient**: In-memory storage, no persistence needed
+
 ## Data Source
 
 All book data is provided by the [Gutendex API](https://gutendex.com), a JSON web API for Project Gutenberg's ebook metadata.
