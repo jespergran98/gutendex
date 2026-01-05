@@ -116,6 +116,7 @@ gutendex/
 │   │
 │   ├── context/
 │   │   ├── BookmarkContext.jsx
+│   │   ├── CacheContext.jsx
 │   │   ├── FilterContext.jsx
 │   │   ├── SearchContext.jsx
 │   │   └── SortContext.jsx
