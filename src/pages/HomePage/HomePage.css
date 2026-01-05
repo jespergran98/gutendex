@@ -16,8 +16,8 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: blur(16px);
-  transform: scale(1.05);
+  filter: blur(8px);
+  transform: scale(1.03);
   z-index: -2;
 }
 
