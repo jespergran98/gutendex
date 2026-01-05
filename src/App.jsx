@@ -1,4 +1,5 @@
 import React from 'react';
+import { CacheProvider } from './context/CacheContext';
 import { BookmarkProvider } from './context/BookmarkContext';
 import { FilterProvider } from './context/FilterContext';
 import { SortProvider } from './context/SortContext';
@@ -8,15 +9,17 @@ import './App.css';
 
 function App() {
   return (
-    <SearchProvider>
-      <SortProvider>
-        <FilterProvider>
-          <BookmarkProvider>
-            <HomePage />
-          </BookmarkProvider>
-        </FilterProvider>
-      </SortProvider>
-    </SearchProvider>
+    <CacheProvider>
+      <SearchProvider>
+        <SortProvider>
+          <FilterProvider>
+            <BookmarkProvider>
+              <HomePage />
+            </BookmarkProvider>
+          </FilterProvider>
+        </SortProvider>
+      </SearchProvider>
+    </CacheProvider>
   );
 }
 
